@@ -147,4 +147,12 @@ class ProductRepositoryTest {
         delete = productRepository.deleteByName("Vivo X100");
         assertEquals(0, delete);
     }
+
+    @Test
+    void testNamedQuery() {
+        Pageable pageable = PageRequest.of(0,1);
+        List<Product> products = productRepository.searchProductUsingName("Xiaomi 13T", pageable);
+        assertEquals(1, products.size());
+        assertEquals("Xiaomi 13T", products.get(0).getName());
+    }
 }
