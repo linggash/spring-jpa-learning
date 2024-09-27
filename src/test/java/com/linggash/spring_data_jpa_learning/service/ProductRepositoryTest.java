@@ -83,4 +83,16 @@ class ProductRepositoryTest {
         assertEquals(2, page2.getTotalPages());
         assertEquals("Xiaomi 13T", page2.getContent().get(0).getName());
     }
+
+    @Test
+    void testCountByCategory_Name() {
+        Long count = productRepository.count();
+        assertEquals(2L, count);
+
+        count = productRepository.countByCategory_Name("GADGET MURAH");
+        assertEquals(2L, count);
+
+        count = productRepository.countByCategory_Name("NOTHINNGG");
+        assertEquals(0L, count);
+    }
 }
