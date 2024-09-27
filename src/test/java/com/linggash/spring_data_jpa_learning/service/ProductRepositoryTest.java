@@ -6,6 +6,7 @@ import com.linggash.spring_data_jpa_learning.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -48,5 +49,14 @@ class ProductRepositoryTest {
         assertEquals(2, products.size());
         assertEquals("Xiaomi 13T", products.get(0).getName());
         assertEquals("Xiaomi 14T", products.get(1).getName());
+    }
+
+    @Test
+    void sort() {
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+        List<Product> products = productRepository.findAllByCategory_Name("GADGET MURAH", sort);
+        assertEquals(2, products.size());
+        assertEquals("Xiaomi 14T", products.get(0).getName());
+        assertEquals("Xiaomi 13T", products.get(1).getName());
     }
 }
