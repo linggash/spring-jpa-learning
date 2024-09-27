@@ -6,6 +6,8 @@ import com.linggash.spring_data_jpa_learning.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -58,5 +60,20 @@ class ProductRepositoryTest {
         assertEquals(2, products.size());
         assertEquals("Xiaomi 14T", products.get(0).getName());
         assertEquals("Xiaomi 13T", products.get(1).getName());
+    }
+
+    @Test
+    void testPageable() {
+        // page 0
+        Pageable pageable = PageRequest.of(0, 1, Sort.by(Sort.Order.desc("id")));
+        List<Product> page1 = productRepository.findAllByCategory_Name("GADGET MURAH", pageable);
+        assertEquals(1, page1.size());
+        assertEquals("Xiaomi 14T", page1.get(0).getName());
+
+        // page 1
+        pageable = PageRequest.of(1, 1, Sort.by(Sort.Order.desc("id")));
+        List<Product> page2 = productRepository.findAllByCategory_Name("GADGET MURAH", pageable);
+        assertEquals(1, page2.size());
+        assertEquals("Xiaomi 13T", page2.get(0).getName());
     }
 }
