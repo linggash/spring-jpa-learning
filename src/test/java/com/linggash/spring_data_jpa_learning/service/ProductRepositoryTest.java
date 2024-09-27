@@ -110,7 +110,7 @@ class ProductRepositoryTest {
     }
 
     @Test
-    void testDeleteByName() {
+    void testDeleteByNameOld() {
         transactionOperations.executeWithoutResult(transactionStatus -> {
             Category category = categoryRepository.findById(1L).orElse(null);
             assertNotNull(category);
@@ -127,5 +127,24 @@ class ProductRepositoryTest {
             delete = productRepository.deleteByName("Vivo X100");
             assertEquals(0, delete);
         });
+    }
+
+
+    @Test
+    void testDeleteByNameNew() {
+        Category category = categoryRepository.findById(1L).orElse(null);
+        assertNotNull(category);
+
+        Product product = new Product();
+        product.setName("Vivo X100");
+        product.setPrice(13_000_000L);
+        product.setCategory(category);
+        productRepository.save(product);
+
+        int delete = productRepository.deleteByName("Vivo X100");
+        assertEquals(1, delete);
+
+        delete = productRepository.deleteByName("Vivo X100");
+        assertEquals(0, delete);
     }
 }
