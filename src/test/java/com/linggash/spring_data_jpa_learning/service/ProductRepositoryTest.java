@@ -6,6 +6,7 @@ import com.linggash.spring_data_jpa_learning.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -66,14 +67,20 @@ class ProductRepositoryTest {
     void testPageable() {
         // page 0
         Pageable pageable = PageRequest.of(0, 1, Sort.by(Sort.Order.desc("id")));
-        List<Product> page1 = productRepository.findAllByCategory_Name("GADGET MURAH", pageable);
-        assertEquals(1, page1.size());
-        assertEquals("Xiaomi 14T", page1.get(0).getName());
+        Page<Product> page1 = productRepository.findAllByCategory_Name("GADGET MURAH", pageable);
+        assertEquals(1, page1.getContent().size());
+        assertEquals(0, page1.getNumber());
+        assertEquals(2, page1.getTotalElements());
+        assertEquals(2, page1.getTotalPages());
+        assertEquals("Xiaomi 14T", page1.getContent().get(0).getName());
 
         // page 1
         pageable = PageRequest.of(1, 1, Sort.by(Sort.Order.desc("id")));
-        List<Product> page2 = productRepository.findAllByCategory_Name("GADGET MURAH", pageable);
-        assertEquals(1, page2.size());
-        assertEquals("Xiaomi 13T", page2.get(0).getName());
+        Page<Product> page2 = productRepository.findAllByCategory_Name("GADGET MURAH", pageable);
+        assertEquals(1, page2.getContent().size());
+        assertEquals(1, page2.getNumber());
+        assertEquals(2, page2.getTotalElements());
+        assertEquals(2, page2.getTotalPages());
+        assertEquals("Xiaomi 13T", page2.getContent().get(0).getName());
     }
 }
