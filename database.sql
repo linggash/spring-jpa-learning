@@ -20,3 +20,9 @@ CREATE TABLE products(
 ) ENGINE InnoDB;
 
 SElECT * FROM products;
+
+ALTER TABLE categories
+    ADD COLUMN created_date TIMESTAMP;
+
+ALTER TABLE categories
+    ADD COLUMN last_modified_date TIMESTAMP;

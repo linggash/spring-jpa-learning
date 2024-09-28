@@ -1,8 +1,7 @@
-package com.linggash.spring_data_jpa_learning.service;
+package com.linggash.spring_data_jpa_learning.repository;
 
 import com.linggash.spring_data_jpa_learning.entity.Category;
 import com.linggash.spring_data_jpa_learning.entity.Product;
-import com.linggash.spring_data_jpa_learning.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

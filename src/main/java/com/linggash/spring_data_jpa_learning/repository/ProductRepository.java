@@ -1,4 +1,4 @@
-package com.linggash.spring_data_jpa_learning.service;
+package com.linggash.spring_data_jpa_learning.repository;
 
 import com.linggash.spring_data_jpa_learning.entity.Category;
 import com.linggash.spring_data_jpa_learning.entity.Product;
