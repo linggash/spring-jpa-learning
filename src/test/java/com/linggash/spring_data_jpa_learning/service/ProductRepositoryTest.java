@@ -210,4 +210,31 @@ class ProductRepositoryTest {
             slice = productRepository.findAllByCategory(category, slice.nextPageable());
         }
     }
+
+    @Test
+    void testLock1() {
+        transactionOperations.executeWithoutResult(transactionStatus -> {
+            Product product = productRepository.findFirstByIdEquals(1L).orElse(null);
+            assertNotNull(product);
+            product.setPrice(30_000_000L);
+
+            try {
+                Thread.sleep(20_000L);
+                productRepository.save(product);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+
+    @Test
+    void testLock2() {
+        transactionOperations.executeWithoutResult(transactionStatus -> {
+            Product product = productRepository.findFirstByIdEquals(1L).orElse(null);
+            assertNotNull(product);
+            product.setPrice(10_000_000L);
+            productRepository.save(product);
+        });
+    }
 }
