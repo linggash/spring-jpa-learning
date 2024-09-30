@@ -2,6 +2,8 @@ package com.linggash.spring_data_jpa_learning.repository;
 
 import com.linggash.spring_data_jpa_learning.entity.Category;
 import com.linggash.spring_data_jpa_learning.entity.Product;
+import com.linggash.spring_data_jpa_learning.model.ProductPrice;
+import com.linggash.spring_data_jpa_learning.model.SimpleProduct;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -251,5 +253,14 @@ class ProductRepositoryTest {
 
         List<Product> products = productRepository.findAll(specification);
         assertEquals(2, products.size());
+    }
+
+    @Test
+    void testProjection() {
+        List<SimpleProduct> simpleProducts = productRepository.findAllByNameLike("%Xiaomi%", SimpleProduct.class);
+        assertEquals(2, simpleProducts.size());
+
+        List<ProductPrice> productPrices = productRepository.findAllByNameLike("%Xiaomi%", ProductPrice.class);
+        assertEquals(2, productPrices.size());
     }
 }

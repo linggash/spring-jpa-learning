@@ -2,6 +2,7 @@ package com.linggash.spring_data_jpa_learning.repository;
 
 import com.linggash.spring_data_jpa_learning.entity.Category;
 import com.linggash.spring_data_jpa_learning.entity.Product;
+import com.linggash.spring_data_jpa_learning.model.SimpleProduct;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,8 @@ import java.util.stream.Stream;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
+
+    <T> List<T> findAllByNameLike(String name, Class<T> tClass);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Product> findFirstByIdEquals(Long id);
